@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SKYHomeViewController.h
 //  Chat
 //
 //  Created by sky on 14/12/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SKYHomeViewController : UIViewController
 
 @end
-
