@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		336738831A40501D00BC28A9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336738821A40501D00BC28A9 /* Login.storyboard */; };
 		339A7E811A3F084A0015BBC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A7E801A3F084A0015BBC1 /* main.m */; };
 		339A7E841A3F084A0015BBC1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A7E831A3F084A0015BBC1 /* AppDelegate.m */; };
 		339A7E8A1A3F084A0015BBC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339A7E881A3F084A0015BBC1 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		1405261CEFFC296ED4719A50 /* Pods-Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Chat/Pods-Chat.release.xcconfig"; sourceTree = "<group>"; };
+		336738821A40501D00BC28A9 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		339A7E7B1A3F084A0015BBC1 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		339A7E7F1A3F084A0015BBC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		339A7E801A3F084A0015BBC1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				339A7E8B1A3F084A0015BBC1 /* Images.xcassets */,
 				339A7E8D1A3F084A0015BBC1 /* LaunchScreen.xib */,
 				339A7E7E1A3F084A0015BBC1 /* Supporting Files */,
+				336738821A40501D00BC28A9 /* Login.storyboard */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				336738831A40501D00BC28A9 /* Login.storyboard in Resources */,
 				339A7E8A1A3F084A0015BBC1 /* Main.storyboard in Resources */,
 				339A7E8F1A3F084A0015BBC1 /* LaunchScreen.xib in Resources */,
 				339A7E8C1A3F084A0015BBC1 /* Images.xcassets in Resources */,

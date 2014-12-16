@@ -17,6 +17,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+//    UIStoryboard *loginStoryBoard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+//    UIViewController *loginCtl = [loginStoryBoard instantiateInitialViewController];
+//    
+//    self.window.rootViewController = loginCtl;
+    [self loginStateChange:nil];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
@@ -40,6 +50,35 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+-(void)loginStateChange:(NSNotification *)notification
+{
+    UIViewController *rootCtl = nil;
+    
+//    BOOL isAutoLogin = [[[EaseMob sharedInstance] chatManager] isAutoLoginEnabled];
+//    BOOL loginSuccess = [notification.object boolValue];
+    
+    if ( /* DISABLES CODE */ (0) /*isAutoLogin || loginSuccess*/) {
+//        [[ApplyViewController shareController] loadDataSourceFromLocalDB];
+        if (!self.mainController) {
+            UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            self.mainController = (SKYRootViewController *)[mainStoryBoard instantiateInitialViewController];
+
+        }else{
+            NSLog(@"reuse");
+        }
+        rootCtl = self.mainController;
+    }else{
+        self.mainController = nil;
+        UIStoryboard *loginStoryBoard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        rootCtl = [loginStoryBoard instantiateInitialViewController];
+        
+    }
+    
+    self.window.rootViewController = rootCtl;
+
 }
 
 @end
