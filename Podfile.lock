@@ -1,10 +1,13 @@
 PODS:
+  - MBProgressHUD (0.9)
   - RESideMenu (4.0.7)
 
 DEPENDENCIES:
+  - MBProgressHUD (~> 0.9)
   - RESideMenu (~> 4.0.7)
 
 SPEC CHECKSUMS:
+  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
   RESideMenu: a9c1cd2e64e60e1d3166ddac01a83e215a0e4d30
 
 COCOAPODS: 0.35.0
