@@ -38,15 +38,7 @@ NSString * const KNOTIFICATION_LOGINCHANGE = @"com.bluesky.chat.loginStateChange
     if (![self isEmpty]) {
         [self.view endEditing:YES];
         if ([self.usernameTextField.text isChinese]) {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"用户名不支持中文"
-                                  message:nil
-                                  delegate:nil
-                                  cancelButtonTitle:@"确定"
-                                  otherButtonTitles:nil];
-            
-            [alert show];
-            
+            TTAlertNoTitle(@"用户名不支持中文");
             return;
         }
 #if !TARGET_IPHONE_SIMULATOR
@@ -66,15 +58,7 @@ NSString * const KNOTIFICATION_LOGINCHANGE = @"com.bluesky.chat.loginStateChange
     if (![self isEmpty]) {
         [self.view endEditing:YES];
         if ([self.usernameTextField.text isChinese]) {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"用户名不支持中文"
-                                  message:nil
-                                  delegate:nil
-                                  cancelButtonTitle:@"确定"
-                                  otherButtonTitles:nil];
-            
-            [alert show];
-            
+            TTAlertNoTitle(@"用户名不支持中文");
             return;
         }
         
