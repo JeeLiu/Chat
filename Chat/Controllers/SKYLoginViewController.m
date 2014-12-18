@@ -42,11 +42,34 @@ NSString * const KNOTIFICATION_LOGINCHANGE = @"com.bluesky.chat.loginStateChange
             return;
         }
 #if !TARGET_IPHONE_SIMULATOR
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"填写推送消息时使用的昵称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        UITextField *nameTextField = [alert textFieldAtIndex:0];
-        nameTextField.text = self.usernameTextField.text;
-        [alert show];
+
+        UIAlertController *alertCtl = [UIAlertController alertControllerWithTitle:nil
+                                                                          message:@"填写推送消息时使用的昵称"
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
+        [alertCtl addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.text = self.usernameTextField.text;
+        }];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        
+        
+        __weak typeof(self)weakSelf = self;
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            UITextField *textField = alertCtl.textFields.firstObject;
+            
+            if (textField.text.length > 0) {
+                [[EaseMob sharedInstance].chatManager setNickname:textField.text];
+            }
+            
+            [weakSelf loginWithUsername:_usernameTextField.text password:_passwordTextField.text];
+        }];
+        
+        [alertCtl addAction:cancelAction];
+        [alertCtl addAction:okAction];
+        
+        [self presentViewController:alertCtl animated:YES completion:nil];
+        
 #elif TARGET_IPHONE_SIMULATOR
         [self loginWithUsername:_usernameTextField.text password:_passwordTextField.text];
 #endif
