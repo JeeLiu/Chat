@@ -5,10 +5,10 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="Jen-RQ-50Q">
             <objects>
-                <viewController id="q3c-qD-ixa" sceneMemberID="viewController">
+                <viewController id="q3c-qD-ixa" customClass="SKYLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fds-lB-mV7"/>
                         <viewControllerLayoutGuide type="bottom" id="2aX-kH-Fgj"/>
@@ -56,6 +56,9 @@
                                 <state key="normal" title="登陆">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginAction:" destination="q3c-qD-ixa" eventType="touchUpInside" id="FH3-2z-8bQ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="loz-Fc-lIC">
                                 <rect key="frame" x="110" y="285" width="200" height="30"/>
@@ -66,6 +69,9 @@
                                 <state key="normal" title="注册">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="registerAction:" destination="q3c-qD-ixa" eventType="touchUpInside" id="Rsg-TN-b2g"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,6 +104,10 @@
                             <constraint firstItem="loz-Fc-lIC" firstAttribute="top" secondItem="4GY-ZU-LH7" secondAttribute="top" id="zYn-Tg-rMR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="passwordTextField" destination="YrC-LL-omy" id="xIJ-Fa-XsN"/>
+                        <outlet property="usernameTextField" destination="7kZ-mk-FGr" id="WOc-gL-bx4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gGR-ol-U0r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

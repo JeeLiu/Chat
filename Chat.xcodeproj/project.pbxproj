@@ -17,6 +17,8 @@
 		330029F11A41C61700235368 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 330029F01A41C61700235368 /* libresolv.dylib */; };
 		330029F31A41C62800235368 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 330029F21A41C62800235368 /* libxml2.dylib */; };
 		336738831A40501D00BC28A9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 336738821A40501D00BC28A9 /* Login.storyboard */; };
+		336E348E1A42FA240073497B /* SKYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 336E348D1A42FA240073497B /* SKYLoginViewController.m */; };
+		336E34921A42FE940073497B /* NSString+Valid.m in Sources */ = {isa = PBXBuildFile; fileRef = 336E34911A42FE940073497B /* NSString+Valid.m */; };
 		339A7E811A3F084A0015BBC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A7E801A3F084A0015BBC1 /* main.m */; };
 		339A7E841A3F084A0015BBC1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A7E831A3F084A0015BBC1 /* AppDelegate.m */; };
 		339A7E8A1A3F084A0015BBC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 339A7E881A3F084A0015BBC1 /* Main.storyboard */; };
@@ -129,6 +131,10 @@
 		330029F01A41C61700235368 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		330029F21A41C62800235368 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		336738821A40501D00BC28A9 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		336E348C1A42FA240073497B /* SKYLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKYLoginViewController.h; sourceTree = "<group>"; };
+		336E348D1A42FA240073497B /* SKYLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKYLoginViewController.m; sourceTree = "<group>"; };
+		336E34901A42FE940073497B /* NSString+Valid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Valid.h"; sourceTree = "<group>"; };
+		336E34911A42FE940073497B /* NSString+Valid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Valid.m"; sourceTree = "<group>"; };
 		339A7E7B1A3F084A0015BBC1 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		339A7E7F1A3F084A0015BBC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		339A7E801A3F084A0015BBC1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -407,6 +413,15 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
+		336E348F1A42FE740073497B /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				336E34901A42FE940073497B /* NSString+Valid.h */,
+				336E34911A42FE940073497B /* NSString+Valid.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		339A7E721A3F084A0015BBC1 = {
 			isa = PBXGroup;
 			children = (
@@ -430,6 +445,7 @@
 		339A7E7D1A3F084A0015BBC1 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				336E348F1A42FE740073497B /* Category */,
 				330029831A41C59F00235368 /* EaseMobSDK */,
 				339A7EA41A3F0EA30015BBC1 /* Controllers */,
 				339A7E821A3F084A0015BBC1 /* AppDelegate.h */,
@@ -478,6 +494,8 @@
 				339A7EA91A3F12840015BBC1 /* SKYLeftMenuViewController.m */,
 				339A7EAB1A3F157C0015BBC1 /* SKYHomeViewController.h */,
 				339A7EAC1A3F157C0015BBC1 /* SKYHomeViewController.m */,
+				336E348C1A42FA240073497B /* SKYLoginViewController.h */,
+				336E348D1A42FA240073497B /* SKYLoginViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -630,9 +648,11 @@
 			files = (
 				339A7EA71A3F0F5B0015BBC1 /* SKYRootViewController.m in Sources */,
 				339A7EAA1A3F12840015BBC1 /* SKYLeftMenuViewController.m in Sources */,
+				336E348E1A42FA240073497B /* SKYLoginViewController.m in Sources */,
 				339A7EAD1A3F157C0015BBC1 /* SKYHomeViewController.m in Sources */,
 				339A7E841A3F084A0015BBC1 /* AppDelegate.m in Sources */,
 				339A7E811A3F084A0015BBC1 /* main.m in Sources */,
+				336E34921A42FE940073497B /* NSString+Valid.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
