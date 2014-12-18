@@ -10,6 +10,7 @@
 #import "EaseMob.h"
 #import "NSString+Valid.h"
 #import "MBProgressHUD.h"
+#import "TTGlobalUICommon.h"
 
 
 NSString * const KNOTIFICATION_LOGINCHANGE = @"com.bluesky.chat.loginStateChange";
@@ -62,6 +63,51 @@ NSString * const KNOTIFICATION_LOGINCHANGE = @"com.bluesky.chat.loginStateChange
 }
 
 - (IBAction)registerAction:(UIButton *)sender {
+    if (![self isEmpty]) {
+        [self.view endEditing:YES];
+        if ([self.usernameTextField.text isChinese]) {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:@"用户名不支持中文"
+                                  message:nil
+                                  delegate:nil
+                                  cancelButtonTitle:@"确定"
+                                  otherButtonTitles:nil];
+            
+            [alert show];
+            
+            return;
+        }
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = @"正在注册...";
+        hud.removeFromSuperViewOnHide = YES;
+        
+        [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_usernameTextField.text
+                                                             password:_passwordTextField.text
+                                                       withCompletion:
+         ^(NSString *username, NSString *password, EMError *error) {
+             [hud hide:YES];
+             
+             if (!error) {
+                 TTAlertNoTitle(@"注册成功,请登录");
+             }else{
+                 switch (error.errorCode) {
+                     case EMErrorServerNotReachable:
+                         TTAlertNoTitle(@"连接服务器失败!");
+                         break;
+                     case EMErrorServerDuplicatedAccount:
+                         TTAlertNoTitle(@"您注册的用户已存在!");
+                         break;
+                     case EMErrorServerTimeout:
+                         TTAlertNoTitle(@"连接服务器超时!");
+                         break;
+                     default:
+                         TTAlertNoTitle(@"注册失败");
+                         break;
+                 }
+             }
+         } onQueue:nil];
+    }
 }
 
 
@@ -92,20 +138,20 @@ NSString * const KNOTIFICATION_LOGINCHANGE = @"com.bluesky.chat.loginStateChange
          if (loginInfo && !error) {
              [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
          }else {
-//             switch (error.errorCode) {
-//                 case EMErrorServerNotReachable:
-//                     TTAlertNoTitle(@"连接服务器失败!");
-//                     break;
-//                 case EMErrorServerAuthenticationFailure:
-//                     TTAlertNoTitle(@"用户名或密码错误");
-//                     break;
-//                 case EMErrorServerTimeout:
-//                     TTAlertNoTitle(@"连接服务器超时!");
-//                     break;
-//                 default:
-//                     TTAlertNoTitle(@"登录失败");
-//                     break;
-//             }
+             switch (error.errorCode) {
+                 case EMErrorServerNotReachable:
+                     TTAlertNoTitle(@"连接服务器失败!");
+                     break;
+                 case EMErrorServerAuthenticationFailure:
+                     TTAlertNoTitle(@"用户名或密码错误");
+                     break;
+                 case EMErrorServerTimeout:
+                     TTAlertNoTitle(@"连接服务器超时!");
+                     break;
+                 default:
+                     TTAlertNoTitle(@"登录失败");
+                     break;
+             }
          }
      } onQueue:nil];
 }

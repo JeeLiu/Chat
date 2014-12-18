@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "EaseMob.h"
+#import "TTGlobalUICommon.h"
 
 extern NSString * const KNOTIFICATION_LOGINCHANGE;
 
@@ -267,9 +268,9 @@ extern NSString * const KNOTIFICATION_LOGINCHANGE;
     if (reason == eGroupLeaveReason_BeRemoved) {
         str = [NSString stringWithFormat:@"你被从群组\'%@\'中踢出", tmpStr];
     }
-//    if (str.length > 0) {
-//        TTAlertNoTitle(str);
-//    }
+    if (str.length > 0) {
+        TTAlertNoTitle(str);
+    }
 }
 
 #pragma mark - push
@@ -277,7 +278,7 @@ extern NSString * const KNOTIFICATION_LOGINCHANGE;
 - (void)didBindDeviceWithError:(EMError *)error
 {
     if (error) {
-//        TTAlertNoTitle(@"消息推送与设备绑定失败");
+        TTAlertNoTitle(@"消息推送与设备绑定失败");
     }
 }
 
