@@ -41,7 +41,7 @@
         <!--Home-->
         <scene sceneID="7Td-lK-gbe">
             <objects>
-                <viewController id="MPV-QE-5e0" customClass="SKYHomeViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="MPV-QE-5e0" customClass="SKYHomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="t3M-o8-bHN"/>
                         <viewControllerLayoutGuide type="bottom" id="xPR-f0-gf6"/>
@@ -49,6 +49,33 @@
                     <view key="view" contentMode="scaleToFill" id="w3h-vF-KHh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="D6h-DE-4hX">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="buP-eQ-Uc8">
+                                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="MPV-QE-5e0" id="qcR-53-F0K"/>
+                                    </connections>
+                                </searchBar>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactListCell" id="Kam-Pz-rEa">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kam-Pz-rEa" id="ITE-r5-4iL">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="MPV-QE-5e0" id="D3r-Po-riD"/>
+                                    <outlet property="delegate" destination="MPV-QE-5e0" id="6kr-OF-6E3"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="aVW-MB-3rV">
@@ -58,10 +85,23 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="contactsTableView" destination="D6h-DE-4hX" id="Fo5-Zc-HN2"/>
+                        <outlet property="searchDisplayController" destination="tOW-hc-hHD" id="Utd-qM-TOy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f3S-tL-1cH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="tOW-hc-hHD">
+                    <connections>
+                        <outlet property="delegate" destination="MPV-QE-5e0" id="JI2-Za-3ta"/>
+                        <outlet property="searchBar" destination="buP-eQ-Uc8" id="qPH-jm-BdM"/>
+                        <outlet property="searchContentsController" destination="MPV-QE-5e0" id="Wha-CS-XZy"/>
+                        <outlet property="searchResultsDataSource" destination="MPV-QE-5e0" id="hfk-c9-WfR"/>
+                        <outlet property="searchResultsDelegate" destination="MPV-QE-5e0" id="Xh5-vH-PvW"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="653.86666666666667" y="289.68000000000001"/>
+            <point key="canvasLocation" x="653" y="289"/>
         </scene>
         <!--Left Menu View Controller-->
         <scene sceneID="YYT-j4-wJz">

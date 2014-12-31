@@ -29,6 +29,7 @@
 		339A7EA71A3F0F5B0015BBC1 /* SKYRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A7EA61A3F0F5B0015BBC1 /* SKYRootViewController.m */; };
 		339A7EAA1A3F12840015BBC1 /* SKYLeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A7EA91A3F12840015BBC1 /* SKYLeftMenuViewController.m */; };
 		339A7EAD1A3F157C0015BBC1 /* SKYHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A7EAC1A3F157C0015BBC1 /* SKYHomeViewController.m */; };
+		33F8BF541A53CF04000280C5 /* ChineseToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 33F8BF531A53CF04000280C5 /* ChineseToPinyin.m */; };
 		9A2DC045F1C5400C83BEC531 /* libPods-Chat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C342EB1966D53CE35A401F /* libPods-Chat.a */; };
 /* End PBXBuildFile section */
 
@@ -155,6 +156,8 @@
 		339A7EA91A3F12840015BBC1 /* SKYLeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKYLeftMenuViewController.m; sourceTree = "<group>"; };
 		339A7EAB1A3F157C0015BBC1 /* SKYHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKYHomeViewController.h; sourceTree = "<group>"; };
 		339A7EAC1A3F157C0015BBC1 /* SKYHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKYHomeViewController.m; sourceTree = "<group>"; };
+		33F8BF521A53CF04000280C5 /* ChineseToPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseToPinyin.h; sourceTree = "<group>"; };
+		33F8BF531A53CF04000280C5 /* ChineseToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseToPinyin.m; sourceTree = "<group>"; };
 		79C342EB1966D53CE35A401F /* libPods-Chat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Chat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A36F5054656FE4FEF184D5F9 /* Pods-Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chat/Pods-Chat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -465,6 +468,7 @@
 		339A7E7D1A3F084A0015BBC1 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				33F8BF511A53CEC9000280C5 /* Utiles */,
 				336E34931A430EE90073497B /* 3rdparty */,
 				336E348F1A42FE740073497B /* Category */,
 				330029831A41C59F00235368 /* EaseMobSDK */,
@@ -519,6 +523,15 @@
 				336E348D1A42FA240073497B /* SKYLoginViewController.m */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		33F8BF511A53CEC9000280C5 /* Utiles */ = {
+			isa = PBXGroup;
+			children = (
+				33F8BF521A53CF04000280C5 /* ChineseToPinyin.h */,
+				33F8BF531A53CF04000280C5 /* ChineseToPinyin.m */,
+			);
+			path = Utiles;
 			sourceTree = "<group>";
 		};
 		5535EA6D192C1B0D5AFFFFD0 /* Pods */ = {
@@ -670,6 +683,7 @@
 				339A7EA71A3F0F5B0015BBC1 /* SKYRootViewController.m in Sources */,
 				339A7EAA1A3F12840015BBC1 /* SKYLeftMenuViewController.m in Sources */,
 				336E348E1A42FA240073497B /* SKYLoginViewController.m in Sources */,
+				33F8BF541A53CF04000280C5 /* ChineseToPinyin.m in Sources */,
 				339A7EAD1A3F157C0015BBC1 /* SKYHomeViewController.m in Sources */,
 				339A7E841A3F084A0015BBC1 /* AppDelegate.m in Sources */,
 				336E34971A430F0B0073497B /* TTGlobalUICommon.m in Sources */,

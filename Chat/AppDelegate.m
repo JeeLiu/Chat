@@ -12,7 +12,7 @@
 
 extern NSString * const KNOTIFICATION_LOGINCHANGE;
 
-@interface AppDelegate ()
+@interface AppDelegate ()<EMChatManagerDelegate>
 
 @end
 
@@ -50,6 +50,9 @@ extern NSString * const KNOTIFICATION_LOGINCHANGE;
     //demo中此监听方法在MainViewController中
     [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
+#warning 注册为SDK的ChatManager的delegate (及时监听到申请和通知)
+    [[EaseMob sharedInstance].chatManager removeDelegate:self];
+    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     
     [self loginStateChange:nil];
     [self.window makeKeyAndVisible];
