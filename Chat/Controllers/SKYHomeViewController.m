@@ -10,6 +10,7 @@
 #import "EaseMob.h"
 #import "ChineseToPinyin.h"
 #import "MBProgressHUD.h"
+#import "MJRefresh.h"
 
 NSString * const ContactListCell = @"ContactListCell";
 
@@ -17,9 +18,6 @@ NSString * const ContactListCell = @"ContactListCell";
 @interface SKYHomeViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
-
-
-
 
 @property (strong, nonatomic) NSMutableArray *contactsSource;
 @property (strong, nonatomic) NSMutableArray *dataSource;
@@ -37,12 +35,23 @@ NSString * const ContactListCell = @"ContactListCell";
     _contactsSource = [NSMutableArray array];
     _sectionTitles = [NSMutableArray array];
     
+    
+    //解决无数据的地方也显示 separator分割线的问题
+    self.contactsTableView.tableFooterView = [[UIView alloc] init];
+    
     [self reloadDataSource];
+    [self setupRefresh];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-   
+}
+
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh {
+    [self.contactsTableView addHeaderWithTarget:self action:@selector(reloadDataSource)];
 }
 
 
@@ -85,7 +94,6 @@ NSString * const ContactListCell = @"ContactListCell";
             cell.textLabel.text = @"群组";
         }
         else{
-
             EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
             cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
             cell.textLabel.text = buddy.username;
@@ -144,7 +152,7 @@ NSString * const ContactListCell = @"ContactListCell";
 #pragma mark-UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [self reloadDataSource];
+
 }
 
 #pragma mark - private
@@ -203,26 +211,34 @@ NSString * const ContactListCell = @"ContactListCell";
     hud.labelText = @"刷新数据...";
     hud.removeFromSuperViewOnHide = YES;
 
-    [self.dataSource removeAllObjects];
-    [self.contactsSource removeAllObjects];
-    
-    NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
-    for (EMBuddy *buddy in buddyList) {
-        if (buddy.followState != eEMBuddyFollowState_NotFollowed) {
-            [self.contactsSource addObject:buddy];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.dataSource removeAllObjects];
+        [self.contactsSource removeAllObjects];
+        
+        NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
+        for (EMBuddy *buddy in buddyList) {
+            if (buddy.followState != eEMBuddyFollowState_NotFollowed) {
+                [self.contactsSource addObject:buddy];
+            }
         }
-    }
+        
+        NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
+        NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
+        if (loginUsername && loginUsername.length > 0) {
+            EMBuddy *loginBuddy = [EMBuddy buddyWithUsername:loginUsername];
+            [self.contactsSource addObject:loginBuddy];
+        }
+        
+        [self.dataSource addObjectsFromArray:[self sortDataArray:self.contactsSource]];
+        
+        //防止block捕获self，导致内存泄露
+        __weak __typeof(self)weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.contactsTableView reloadData];
+        });
+    });
     
-    NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-    NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-    if (loginUsername && loginUsername.length > 0) {
-        EMBuddy *loginBuddy = [EMBuddy buddyWithUsername:loginUsername];
-        [self.contactsSource addObject:loginBuddy];
-    }
-    
-    [self.dataSource addObjectsFromArray:[self sortDataArray:self.contactsSource]];
-    
-    [self.contactsTableView reloadData];
+    [self.contactsTableView headerEndRefreshing];
     [hud hide:YES];
 }
 
