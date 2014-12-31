@@ -51,7 +51,7 @@ NSString * const ContactListCell = @"ContactListCell";
  *  集成刷新控件
  */
 - (void)setupRefresh {
-    [self.contactsTableView addHeaderWithTarget:self action:@selector(reloadDataSource)];
+    [self.contactsTableView addHeaderWithTarget:self action:@selector(refreshContactsList)];
 }
 
 
@@ -203,8 +203,19 @@ NSString * const ContactListCell = @"ContactListCell";
     return sortedArray;
 }
 
-
 #pragma mark - dataSource
+- (void)refreshContactsList {
+    //防止block捕获self，导致内存泄露
+    __weak __typeof(self)weakSelf = self;
+    
+    [[[EaseMob sharedInstance] chatManager] asyncFetchBuddyListWithCompletion:^(NSArray *buddyList, EMError *error) {
+        if (!error) {
+            [weakSelf reloadDataSource];
+        }
+        [weakSelf.contactsTableView headerEndRefreshing];
+    } onQueue:nil];
+}
+
 - (void)reloadDataSource
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -238,7 +249,6 @@ NSString * const ContactListCell = @"ContactListCell";
         });
     });
     
-    [self.contactsTableView headerEndRefreshing];
     [hud hide:YES];
 }
 
