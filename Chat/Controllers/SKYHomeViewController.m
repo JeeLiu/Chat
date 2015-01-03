@@ -39,6 +39,9 @@ NSString * const ContactListCell = @"ContactListCell";
     //解决无数据的地方也显示 separator分割线的问题
     self.contactsTableView.tableFooterView = [[UIView alloc] init];
     
+    //解决右侧索引导致tableview像是右边被切了一小条的问题
+    self.contactsTableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    
     [self reloadDataSource];
     [self setupRefresh];
 }
