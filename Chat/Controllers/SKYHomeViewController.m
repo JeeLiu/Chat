@@ -15,13 +15,15 @@
 NSString * const ContactListCell = @"ContactListCell";
 
 
-@interface SKYHomeViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface SKYHomeViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
 
 @property (strong, nonatomic) NSMutableArray *contactsSource;
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (strong, nonatomic) NSMutableArray *sectionTitles;
+
+@property (strong, nonatomic) NSMutableArray *searchResults;
 
 @end
 
@@ -35,6 +37,7 @@ NSString * const ContactListCell = @"ContactListCell";
     _contactsSource = [NSMutableArray array];
     _sectionTitles = [NSMutableArray array];
     
+    _searchResults = [NSMutableArray array];
     
     //解决无数据的地方也显示 separator分割线的问题
     self.contactsTableView.tableFooterView = [[UIView alloc] init];
@@ -61,12 +64,9 @@ NSString * const ContactListCell = @"ContactListCell";
 #pragma mark-UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (tableView == self.searchDisplayController.searchResultsTableView)
-    {
-        return 0;
-    }
-    else
-    {
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return 1;
+    } else {
         return [self.dataSource count] + 1;
     }
 
@@ -75,34 +75,48 @@ NSString * const ContactListCell = @"ContactListCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 2;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return self.searchResults.count;
+    } else {
+        if (section == 0) {
+            return 2;
+        }
+        
+        return [[self.dataSource objectAtIndex:(section - 1)] count];
     }
-    
-    return [[self.dataSource objectAtIndex:(section - 1)] count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ContactListCell forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ContactListCell];
     
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        
-        cell.imageView.image = [UIImage imageNamed:@"newFriends"];
-        cell.textLabel.text = @"申请与通知";
-    } else {
-        if (indexPath.section == 0 && indexPath.row == 1) {
-            cell.imageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
-            cell.textLabel.text = @"群组";
-        }
-        else{
-            EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
-            cell.textLabel.text = buddy.username;
-        }
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactListCell];
     }
     
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        EMBuddy *buddy = [self.searchResults objectAtIndex:indexPath.row];
+        cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
+        cell.textLabel.text = buddy.username;
+
+    } else {
+        if (indexPath.section == 0 && indexPath.row == 0) {
+            
+            cell.imageView.image = [UIImage imageNamed:@"newFriends"];
+            cell.textLabel.text = @"申请与通知";
+        } else {
+            if (indexPath.section == 0 && indexPath.row == 1) {
+                cell.imageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
+                cell.textLabel.text = @"群组";
+            }
+            else{
+                EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
+                cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
+                cell.textLabel.text = buddy.username;
+            }
+        }
+    }
     
     return cell;
 }
@@ -115,19 +129,24 @@ NSString * const ContactListCell = @"ContactListCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0 || [[self.dataSource objectAtIndex:(section - 1)] count] == 0)
-    {
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
         return 0;
-    }
-    else{
-        return 22;
+    } else {
+        if (section == 0 || [[self.dataSource objectAtIndex:(section - 1)] count] == 0) {
+            return 0;
+        } else {
+            return 22;
+        }
     }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (section == 0 || [[self.dataSource objectAtIndex:(section - 1)] count] == 0)
-    {
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return nil;
+    }
+    
+    if (section == 0 || [[self.dataSource objectAtIndex:(section - 1)] count] == 0) {
         return nil;
     }
     
@@ -142,6 +161,10 @@ NSString * const ContactListCell = @"ContactListCell";
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return nil;
+    }
+    
     NSMutableArray * existTitles = [NSMutableArray array];
     //section数组为空的title过滤掉，不显示
     for (int i = 0; i < [self.sectionTitles count]; i++) {
@@ -253,6 +276,48 @@ NSString * const ContactListCell = @"ContactListCell";
     });
     
     [hud hide:YES];
+}
+
+
+#pragma mark - UISearchDisplayDelegate Delegate Methods
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    //防止block捕获self，导致内存泄露
+    [self updateFilteredContentBuddyWithUsername:searchString];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+
+#pragma mark-- filter data
+- (void)updateFilteredContentBuddyWithUsername:(NSString *)username
+{
+    /*
+     Update the filtered array based on the search text and scope.
+     */
+    if ((username == nil) || [username length] == 0)
+    {
+        self.searchResults = [self.contactsSource mutableCopy];
+
+        return;
+    }
+    
+    
+    [self.searchResults removeAllObjects]; // First clear the filtered array.
+    
+    for (EMBuddy *buddy in self.contactsSource)
+    {
+        
+        NSUInteger searchOptions = NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch;
+        NSRange userNameRange = NSMakeRange(0, buddy.username.length);
+        NSRange foundRange = [buddy.username rangeOfString:username options:searchOptions range:userNameRange];
+        if (foundRange.length > 0)
+        {
+            [self.searchResults addObject:buddy];
+        }
+    }
 }
 
 
